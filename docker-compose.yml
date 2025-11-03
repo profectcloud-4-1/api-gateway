@@ -1,0 +1,14 @@
+services:
+  app:
+    image: goormdotcom-api-gateway:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev,secret
+    volumes:
+      - ./config:/app/config
+    user: 1000:1000
+
