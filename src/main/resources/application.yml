@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: "Goormdotcom-API-Gateway"
+  profiles:
+    active: dev
+    include: secret
