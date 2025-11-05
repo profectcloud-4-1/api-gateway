@@ -1,0 +1,7 @@
+spring:
+  cloud:
+    config:
+      uri: http://127.0.0.1:8887 #config 서버 ip:port
+      name: apigateway
+    profiles:
+      active: dev
