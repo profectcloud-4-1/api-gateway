@@ -36,6 +36,8 @@ out/
 ### VS Code ###
 .vscode/
 
+### MAC ###
+.DS_Store
 
 ### configure ###
 *-dev.yml

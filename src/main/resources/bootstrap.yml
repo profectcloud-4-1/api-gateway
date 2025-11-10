@@ -1,7 +1,0 @@
-spring:
-  cloud:
-    config:
-      uri: http://config-server:8887 #config 서버 ip:port
-      name: apigateway
-    profiles:
-      active: dev
