@@ -8,11 +8,8 @@ jobs:
   build-and-deploy:
     name: Build and Deploy Docker Image
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     permissions:
       contents: read
-      id-token: write
-
     env:
       AWS_REGION: ${{ vars.AWS_REGION }}                 # 예: ap-northeast-2
       ECR_REPOSITORY: ${{ vars.AWS_ECR_REPOSITORY }}     # 예: goorm/app-service (슬래시 가능)
