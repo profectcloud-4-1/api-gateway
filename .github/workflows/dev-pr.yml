@@ -1,0 +1,86 @@
+name: Spring-Cloud-Gateway dev-branch pull-request CI workflow
+
+on:
+  pull_request:
+    branches: [ "dev" ]
+
+jobs:
+
+  # 테스트
+  test:
+    env:
+      SPRING_PROFILES_ACTIVE: test
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
+
+      - name: Build with Gradle Wrapper
+        run: ./gradlew test
+
+      - name: Configure AWS credentials
+        if: failure()
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_S3_UPLOAD }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_S3_UPLOAD }}
+          aws-region: ap-northeast-2
+
+      - name: Upload test report to S3 on failure
+        if: failure()
+        run: |
+          RUN_ID="${GITHUB_RUN_ID}"
+          if [ -d "build/reports/tests/test" ]; then
+            aws s3 sync "build/reports/tests/test" \
+              "s3://${{ secrets.S3_REPORT_BUCKET }}/reports/${RUN_ID}/" \
+              --delete
+          else
+            echo "No test report directory found."
+          fi
+
+  # 테스트 실패 시
+  notify-slack-on-build-failure:
+    name: Notify Slack on build failure
+    needs:
+      - test
+    runs-on: ubuntu-latest
+    if: failure()                        # 실패했을 때만 실행
+    steps:
+      - name: Send Slack message on failure
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          CF_DOMAIN: ${{ vars.CF_REPORT_DOMAIN }} # 예: ci.goormdotcom.com
+        run: |
+          REPO="${GITHUB_REPOSITORY}"
+          BRANCH_FROM="${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}"   # PR일 경우: from 브랜치
+          BRANCH_TO="${GITHUB_BASE_REF:-main}"                   # PR일 경우: target 브랜치
+          RUN_ID="${GITHUB_RUN_ID}"
+          GH_URL="https://github.com/${REPO}/actions/runs/${RUN_ID}"
+          REPORT_URL="https://${CF_DOMAIN}/reports/${RUN_ID}/index.html"
+          
+          MESSAGE="❌ *Build/Test Failed*
+          
+          *Repository* : \`${REPO}\`
+          *Branch* : \`${BRANCH_FROM}\` → \`${BRANCH_TO}\`
+          
+          *GitHub Run*: <${GH_URL}|View in GitHub>
+          *Report* : <${REPORT_URL}|View HTML Report>"
+          
+          payload=$(jq -n --arg text "$MESSAGE" '{ text: $text }')
+          
+          curl -X POST -H 'Content-type: application/json' \
+            --data "$payload" \
+            "$SLACK_WEBHOOK_URL"
