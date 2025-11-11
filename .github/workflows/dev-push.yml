@@ -108,6 +108,7 @@ jobs:
             echo "== 새 컨테이너 실행 =="
             docker run -d \
               --name "$CONTAINER_NAME" \
+              --network goormdotcom-net \
               --restart unless-stopped \
               -p 80:8080 \
               "$IMAGE_NAME"
