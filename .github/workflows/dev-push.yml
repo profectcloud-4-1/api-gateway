@@ -85,6 +85,6 @@ jobs:
             docker pull "$IMAGE" 
 
             echo "== 새 컨테이너 실행 =="
-            docker compose up api-gateway --force-recreate
+            docker-compose up -d --force-recreate api-gateway
 
             echo "배포 완료"
