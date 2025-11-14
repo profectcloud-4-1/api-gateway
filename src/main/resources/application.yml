@@ -57,3 +57,12 @@ spring:
                 - Path=/payment-service/**
               filters:
                 - StripPrefix=1
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never
