@@ -144,10 +144,11 @@ jobs:
 
       - name: Upload test report to S3
         run: |
+          RUN_ID="${GITHUB_RUN_ID}"
           if [ -d "build/reports/" ]; then
             aws s3 cp build/reports/report.html \
               "s3://${{ secrets.S3_REPORT_BUCKET }}/reports/${RUN_ID}/report.html" \
-              --content-type text/html
+              --content-type "text/html"
           else
             echo "No test report directory found."
           fi
