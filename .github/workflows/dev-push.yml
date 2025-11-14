@@ -169,7 +169,7 @@ jobs:
           BRANCH_TO="${GITHUB_BASE_REF:-main}"                   # PR일 경우: target 브랜치
           RUN_ID="${GITHUB_RUN_ID}"
           GH_URL="https://github.com/${REPO}/actions/runs/${RUN_ID}"
-          REPORT_URL="https://${CF_DOMAIN}/reports/${RUN_ID}/reports.html"
+          REPORT_URL="https://${CF_DOMAIN}/reports/${RUN_ID}/report.html"
 
           MESSAGE="The result of Api test 📄*
 
