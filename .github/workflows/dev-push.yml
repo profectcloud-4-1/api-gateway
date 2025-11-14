@@ -111,7 +111,7 @@ jobs:
       POSTMAN_ENV_ID: ${{ secrets.POSTMAN_ENV_ID }}
       POSTMAN_API_KEY: ${{ secrets.POSTMAN_API_KEY }}
 
-    name: Setup Newman Test Environment
+    name: Run Newman Test
     runs-on: ubuntu-latest
     needs: build-and-deploy
     steps:
@@ -128,11 +128,11 @@ jobs:
 
       - name: Run Newman tests
         run: |
-          mkdir -p ./build/reports
+          mkdir -p build/reports
           newman run "https://api.getpostman.com/collections/${POSTMAN_COLLECTION_ID}?apikey=${POSTMAN_API_KEY}" \
             -e "https://api.getpostman.com/environments/${POSTMAN_ENV_ID}?apikey=${POSTMAN_API_KEY}" \
             -r htmlextra \
-            --reporter-htmlextra-export build/newman/reports/report.html \
+            --reporter-htmlextra-export build/reports/report.html \
             --reporter-htmlextra-title "Dev server Spring Gateway Test Report"
 
       - name: Configure AWS credentials
@@ -144,7 +144,7 @@ jobs:
 
       - name: Upload test report to S3
         run: |
-          if [ -d "build/newman/reports/" ]; then
+          if [ -d "build/reports/" ]; then
             aws s3 cp build/newman/reports/report.html \
               "s3://${{ secrets.S3_REPORT_BUCKET }}/reports/${RUN_ID}/report.html" \
               --content-type text/html
