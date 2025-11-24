@@ -4,8 +4,22 @@ spring:
   profiles:
     active: ${SPRING_PROFILES_ACTIVE:dev}
 
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      ssl:
+        enabled: ${REDIS_SSL_ENABLED}
+      password: ${REDIS_PASSWORD}
+      database: ${REDIS_DATABASE}
+      timeout: ${REDIS_COMMAND_TIMEOUT:2000} # redis-server 호출 했을 때 대기 시간
+      connect-timeout: ${REDIS_CONNECT_TIMEOUT:2000} # redis-server 연결시 대기 시간
+
   cloud:
     gateway:
+      httpclient:
+        connect-timeout: ${GATEWAY_CONNECT_TIMEOUT:2000}
+        response-timeout: ${GATEWAY_RESPONSE_TIMEOUT:10s}
       server:
         webflux:
           routes:
