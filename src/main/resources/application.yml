@@ -2,7 +2,7 @@ spring:
   application:
     name: api-gateway
   profiles:
-    active: dev
+    active: ${SPRING_PROFILES_ACTIVE:dev}
 
   cloud:
     gateway:
@@ -10,22 +10,22 @@ spring:
         webflux:
           routes:
             - id: product-service
-              uri: http://product-service:8080
+              uri: ${PRODUCT_SERVICE_URL}
               predicates:
                 - Path=/api/v1/product/**,/api/v1/category/**,/api/v1/stock/**,/api/files/**,/api/v1/reviews/**
 
             - id: order-service
-              uri: http://order-service:8080
+              uri: ${ORDER_SERVICE_URL}
               predicates:
                 - Path=/api/v1/orders/**,/api/v1/carts/**,/api/v1/delivery/**
 
             - id: user-service
-              uri: http://user-service:8080
+              uri: ${USER_SERVICE_URL}
               predicates:
                 - Path=/api/v1/users/**
 
             - id: payment-service
-              uri: http://payment-service:8080
+              uri: ${PAYMENT_SERVICE_URL}
               predicates:
                 - Path=/api/v1/payments/**
 
@@ -62,7 +62,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info
+        include: health, info, prometheus
   endpoint:
     health:
       show-details: never
