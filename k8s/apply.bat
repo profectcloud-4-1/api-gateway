@@ -139,6 +139,11 @@ if not "%APPLY_ERR%"=="0" exit /b %APPLY_ERR%
 goto :eof
 
 rem ---------------- Apply manifests ----------------
+echo [apply] ConfigMap: "%SCRIPT_DIR%configmap.tpl.yaml"
+call :render_and_apply "%SCRIPT_DIR%configmap.tpl.yaml"
+
+echo [apply] Secret: "%SCRIPT_DIR%secret.tpl.yaml"
+call :render_and_apply "%SCRIPT_DIR%secret.tpl.yaml"
 
 if exist "%SCRIPT_DIR%deployment.tpl.yaml" (
   echo [apply] Deployment: "%SCRIPT_DIR%deployment.tpl.yaml" (IMAGE=%IMAGE%)

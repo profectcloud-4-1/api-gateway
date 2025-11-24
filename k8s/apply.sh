@@ -79,6 +79,14 @@ if [ -z "$IMAGE_EFFECTIVE" ]; then
 fi
 export IMAGE="$IMAGE_EFFECTIVE"
 
+# Apply ConfigMap (template -> envsubst -> kubectl)
+echo "[apply] ConfigMap: $SCRIPT_DIR/configmap.tpl.yaml"
+envsubst < "$SCRIPT_DIR/configmap.tpl.yaml" | kubectl apply "${KNS_ARGS[@]}" -f -
+
+# Apply Secret (template -> envsubst -> kubectl)
+echo "[apply] Secret: $SCRIPT_DIR/secret.tpl.yaml"
+envsubst < "$SCRIPT_DIR/secret.tpl.yaml" | kubectl apply "${KNS_ARGS[@]}" -f -
+
 # Apply Deployment (template -> envsubst -> kubectl)
 if [ -f "$SCRIPT_DIR/deployment.tpl.yaml" ]; then
   echo "[apply] Deployment: $SCRIPT_DIR/deployment.tpl.yaml (IMAGE=$IMAGE)"

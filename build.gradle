@@ -35,6 +35,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     implementation 'io.micrometer:micrometer-registry-prometheus'
+
+    //.env
+    implementation 'me.paulschwarz:spring-dotenv:4.0.0'
 }
 
 dependencyManagement {

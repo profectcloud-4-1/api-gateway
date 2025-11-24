@@ -20,6 +20,11 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: ${SERVER_PORT}
+          envFrom:
+            - configMapRef:
+                name: api-gateway-config
+            - secretRef:
+                name: api-gateway-secret
           readinessProbe:
             httpGet:
               path: /actuator/health
