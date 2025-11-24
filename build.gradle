@@ -38,6 +38,10 @@ dependencies {
 
     //.env
     implementation 'me.paulschwarz:spring-dotenv:4.0.0'
+
+    // Security & OAuth2 Resource Server (JWT)
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 }
 
 dependencyManagement {

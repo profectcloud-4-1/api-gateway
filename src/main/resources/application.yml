@@ -58,6 +58,13 @@ spring:
               filters:
                 - StripPrefix=1
 
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${OAUTH_ISSUER_URI}
+          jwk-set-uri: ${OAUTH_JWK_SET_URI:}
+
 management:
   endpoints:
     web:
@@ -66,3 +73,7 @@ management:
   endpoint:
     health:
       show-details: never
+
+security:
+  jwt:
+    audience: ${OAUTH_AUDIENCE}
