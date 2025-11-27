@@ -95,4 +95,8 @@ fi
 
 kubectl apply -n "$NAMESPACE_EFFECTIVE" -f "$SCRIPT_DIR/service.yaml"
 
+# Apply HTTPRoute (template -> envsubst -> kubectl)
+echo "[apply] HTTPRoute: $SCRIPT_DIR/httproute.tpl.yaml"
+envsubst < "$SCRIPT_DIR/httproute.tpl.yaml" | kubectl apply "${KNS_ARGS[@]}" -f -
+
 echo "✅ Done."

@@ -27,21 +27,45 @@ spring:
               uri: ${PRODUCT_SERVICE_URL}
               predicates:
                 - Path=/api/v1/product/**,/api/v1/category/**,/api/v1/stock/**,/api/files/**,/api/v1/reviews/**
+            - id: product-service-health
+              uri: ${PRODUCT_SERVICE_URL}
+              predicates:
+                - Path=/health/product
+              filters:
+                - SetPath=/actuator/health
 
             - id: order-service
               uri: ${ORDER_SERVICE_URL}
               predicates:
                 - Path=/api/v1/orders/**,/api/v1/carts/**,/api/v1/delivery/**
+            - id: order-service-health
+              uri: ${ORDER_SERVICE_URL}
+              predicates:
+                - Path=/health/order
+              filters:
+                - SetPath=/actuator/health
 
             - id: user-service
               uri: ${USER_SERVICE_URL}
               predicates:
                 - Path=/api/v1/users/**
+            - id: user-service-health
+              uri: ${USER_SERVICE_URL}
+              predicates:
+                - Path=/health/user
+              filters:
+                - SetPath=/actuator/health
 
             - id: payment-service
               uri: ${PAYMENT_SERVICE_URL}
               predicates:
                 - Path=/api/v1/payments/**
+            - id: payment-service-health
+              uri: ${PAYMENT_SERVICE_URL}
+              predicates:
+                - Path=/health/payment
+              filters:
+                - SetPath=/actuator/health
 
             # dev용 내부 라우트
             - id: user-service-dev
@@ -91,3 +115,4 @@ management:
 security:
   jwt:
     audience: ${OAUTH_AUDIENCE}
+# TODO: healthcheck route 추가
