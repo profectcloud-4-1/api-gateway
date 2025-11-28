@@ -111,8 +111,20 @@ management:
   endpoint:
     health:
       show-details: never
+  metrics:
+    export:
+      otlp:
+        url: ${OTEL_EXPORTER_OTLP_ENDPOINT_METRICS:http://otel-collector:4317}
+  tracing:
+    enabled: true
+  otlp:
+    tracing:
+      endpoint: ${OTEL_EXPORTER_OTLP_ENDPOINT_TRACING:http://otel-collector:4317}
+
+logging:
+  level:
+    io.opentelemetry.exporter: INFO
 
 security:
   jwt:
     audience: ${OAUTH_AUDIENCE}
-# TODO: healthcheck route 추가

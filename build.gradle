@@ -45,6 +45,12 @@ dependencies {
 
     // Reactive Redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+
+    implementation 'io.micrometer:micrometer-tracing-bridge-otel'
+    implementation 'io.opentelemetry:opentelemetry-exporter-otlp'
+
+    implementation 'io.opentelemetry.instrumentation:opentelemetry-logback-appender-1.0:2.5.0-alpha'
+    
 }
 
 dependencyManagement {
