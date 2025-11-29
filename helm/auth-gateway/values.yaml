@@ -1,0 +1,59 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/goormdotcom/auth-gateway
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext: {}
+securityContext: {}
+
+resources:
+  requests:
+    cpu: "100m"
+    memory: "256Mi"
+  limits:
+    cpu: "500m"
+    memory: "512Mi"
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+config:
+  enabled: true
+  data:
+    SPRING_PROFILES_ACTIVE: "dev"
+    SERVER_PORT: "8080"
+    # Internal service endpoints
+    USER_SERVICE_URL: "http://user:8080"
+    PRODUCT_SERVICE_URL: "http://product:8080"
+    ORDER_SERVICE_URL: "http://order:8080"
+    PAYMENT_SERVICE_URL: "http://payment:8080"
+    # Redis
+    REDIS_HOST: "redis"
+    REDIS_PORT: "6379"
+    REDIS_DATABASE: "0"
+    REDIS_SSL_ENABLED: "false"
+    REDIS_COMMAND_TIMEOUT: "2000"
+    REDIS_CONNECT_TIMEOUT: "2000"
+
+secrets:
+  enabled: true
+  data:
+    OAUTH_ISSUER_URI: ""
+    OAUTH_JWK_SET_URI: ""
+    OAUTH_AUDIENCE: ""
+    REDIS_PASSWORD: ""

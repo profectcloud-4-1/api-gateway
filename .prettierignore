@@ -1,0 +1,9 @@
+# Ignore Helm templates to avoid breaking Go template syntax
+helm/**/templates/**
+helm/**/charts/**/*
+
+# Helm packages
+*.tgz
+charts/
+
+

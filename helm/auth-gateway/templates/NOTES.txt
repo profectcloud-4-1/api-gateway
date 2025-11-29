@@ -1,0 +1,10 @@
+1. 차트 렌더링 미리보기
+  helm template {{ .Release.Name }} ./helm/auth-gateway \
+    --namespace {{ .Release.Namespace }}
+
+2. 설치
+  helm install {{ .Release.Name }} ./helm/auth-gateway \
+    --namespace {{ .Release.Namespace }} --create-namespace
+
+3. 기본 값
+  - 서비스 포트: 8080

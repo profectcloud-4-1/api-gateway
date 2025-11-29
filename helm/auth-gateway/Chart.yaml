@@ -1,0 +1,6 @@
+apiVersion: v2
+name: auth-gateway
+description: Helm chart for the Spring Cloud Gateway application
+type: application
+version: 0.1.0
+appVersion: "0.0.1-SNAPSHOT"

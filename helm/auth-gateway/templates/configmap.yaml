@@ -1,0 +1,14 @@
+{{- if .Values.config.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "auth-gateway.fullname" . }}-config
+  labels:
+    {{- include "auth-gateway.labels" . | nindent 4 }}
+data:
+  {{- range $key, $val := .Values.config.data }}
+  {{ $key }}: "{{ $val }}"
+  {{- end }}
+{{- end }}
+
+

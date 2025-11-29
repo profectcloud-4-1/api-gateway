@@ -43,3 +43,8 @@ out/
 *-dev.yml
 
 .env
+.env.local
+.env.prod
+
+values.local.yaml
+values.prod.yaml

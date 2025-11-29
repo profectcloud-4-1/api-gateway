@@ -1,0 +1,34 @@
+# 헬름 차트 설치 시 주입할 값들입니다.
+# 클러스터 환경에 따라 values.local.yaml, values.prod.yaml 등을 만들어 사용하며, 그 파일들은 git에 포함시키지 않습니다.
+
+replicaCount: 1
+
+image:
+  repository: ""
+  tag: ""
+
+config:
+  enabled: true
+  data:
+    SPRING_PROFILES_ACTIVE: ""
+    SERVER_PORT: ""
+    # Internal service endpoints
+    USER_SERVICE_URL: ""
+    PRODUCT_SERVICE_URL: ""
+    ORDER_SERVICE_URL: ""
+    PAYMENT_SERVICE_URL: ""
+    # Redis
+    REDIS_HOST: ""
+    REDIS_PORT: ""
+    REDIS_DATABASE: ""
+    REDIS_SSL_ENABLED: ""
+    REDIS_COMMAND_TIMEOUT: ""
+    REDIS_CONNECT_TIMEOUT: ""
+
+secrets:
+  enabled: true
+  data:
+    OAUTH_ISSUER_URI: ""
+    OAUTH_JWK_SET_URI: ""
+    OAUTH_AUDIENCE: ""
+    REDIS_PASSWORD: ""

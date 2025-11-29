@@ -1,0 +1,16 @@
+# Common Helm ignore patterns
+.DS_Store
+# Editors
+.vscode/
+.idea/
+# Git
+.git/
+.gitignore
+# Mac
+*.swp
+*.bak
+*.tmp
+*.orig
+*.rej
+
+
