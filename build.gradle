@@ -45,6 +45,9 @@ dependencies {
 
     // Reactive Redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+
+    //Opentelemetry
+    implementation "io.opentelemetry:opentelemetry-api"
 }
 
 dependencyManagement {
