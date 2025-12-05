@@ -44,7 +44,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 
     // Reactive Redis
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+    // implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
 
     //Opentelemetry
     implementation "io.opentelemetry:opentelemetry-api"
